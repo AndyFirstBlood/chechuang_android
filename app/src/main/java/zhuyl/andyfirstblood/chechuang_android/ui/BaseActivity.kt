@@ -12,10 +12,10 @@ import android.view.WindowManager
 import android.widget.TextView
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
+import kotterknife.bindOptionalView
 import rx.Observable
 import zhuyl.andyfirstblood.chechuang_android.R
 import zhuyl.andyfirstblood.chechuang_android.root.ViewUtils
-import zhuyl.andyfirstblood.chechuang_android.util.bindOptionalView
 
 abstract class BaseActivity : AppCompatActivity() {
     var lastBackTime: Long = 0
@@ -26,8 +26,6 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initSystemViews()
-        super.onCreate(savedInstanceState)
-
         initContentView()
         initToolbar()
     }

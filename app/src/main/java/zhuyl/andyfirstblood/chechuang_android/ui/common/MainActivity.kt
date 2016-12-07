@@ -1,8 +1,7 @@
-package zhuyl.andyfirstblood.chechuang_android.ui
+package zhuyl.andyfirstblood.chechuang_android.ui.common
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import zhuyl.andyfirstblood.chechuang_android.R
+import zhuyl.andyfirstblood.chechuang_android.ui.BaseActivity
 
 class MainActivity : BaseActivity() {
     override fun initData(savedInstanceState: Bundle?) {
