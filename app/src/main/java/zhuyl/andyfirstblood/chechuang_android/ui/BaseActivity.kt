@@ -1,6 +1,8 @@
 package zhuyl.andyfirstblood.chechuang_android.ui
 
+import android.app.AlertDialog
 import android.app.Dialog
+import android.app.ProgressDialog
 import android.content.pm.ActivityInfo
 import android.os.Build
 import android.os.Bundle
@@ -10,7 +12,9 @@ import android.view.WindowManager
 import android.widget.TextView
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
+import rx.Observable
 import zhuyl.andyfirstblood.chechuang_android.R
+import zhuyl.andyfirstblood.chechuang_android.root.ViewUtils
 import zhuyl.andyfirstblood.chechuang_android.util.bindOptionalView
 
 abstract class BaseActivity : AppCompatActivity() {
@@ -39,10 +43,6 @@ abstract class BaseActivity : AppCompatActivity() {
         }
     }
 
-    abstract fun logoutUserWithError(error: Any)
-
-    abstract fun initData(savedInstanceState: Bundle?)
-
     protected fun initToolbar() {
         if (toolbar != null) {
             setSupportActionBar(toolbar)
@@ -52,13 +52,73 @@ abstract class BaseActivity : AppCompatActivity() {
         }
     }
 
-    abstract fun initContentView()
-
+    protected open fun initContentView() {
+        val viewId = ViewUtils.findContentViewId(this)
+        if (viewId != null) {
+            setContentView(viewId)
+        }
+    }
     protected open fun initSystemViews() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        }
+    }
+
+    protected open fun initData(savedInstanceState: Bundle?) {
+    }
+
+    fun showCurrentDialog(dialog: Dialog) {
+        if (isFinishing) {
+            return
+        }
+
+        runOnUiThread {
+            hideCurrentDialog()
+            dialog.show()
+            currentDialog = dialog
+        }
+    }
+
+    fun showCurrentDialog(builder: AlertDialog.Builder) {
+        runOnUiThread { showCurrentDialog(builder.create()) }
+    }
+
+    fun hideCurrentDialog() {
+        if (isFinishing) {
+            return
+        }
+
+        if (currentDialog != null && currentDialog!!.isShowing) {
+            runOnUiThread { currentDialog!!.cancel() }
+        }
+    }
+
+    fun progressDialog(message: String) {
+        runOnUiThread {
+            val dialog = ProgressDialog(this)
+            dialog.setCancelable(false)
+            dialog.setMessage(message)
+            showCurrentDialog(dialog)
+        }
+    }
+
+    fun alertDialog(message: String) {
+        alertDialogWithCallback(message).subscribe()
+    }
+
+    fun alertDialogWithCallback(message: String): Observable<Int> {
+        return Observable.create<Int> { subscriber ->
+            val builder = AlertDialog.Builder(this)
+            builder.setCancelable(false)
+            builder.setMessage(message)
+            builder.setPositiveButton("确定") { dialog, which ->
+                subscriber.onNext(which)
+                subscriber.onCompleted()
+            }
+
+            showCurrentDialog(builder)
         }
     }
 }
