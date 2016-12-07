@@ -1,7 +1,8 @@
-package zhuyl.andyfirstblood.chechuang_android
+package zhuyl.andyfirstblood.chechuang_android.ui
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import zhuyl.andyfirstblood.chechuang_android.R
 
 class MainActivity : AppCompatActivity() {
 
