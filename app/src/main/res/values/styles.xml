@@ -8,4 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="CC.ToolbarWhiteTheme" parent="Widget.Design.CollapsingToolbar">
+        <item name="android:textColorSecondary">@color/white</item>
+    </style>
 </resources>
