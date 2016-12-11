@@ -4,7 +4,7 @@ import okhttp3.Request
 
 class SendSmsRequest : GenericListRequest<String>() {
     fun prepare(): SendSmsRequest {
-        endpoint = "/api/v1/smsCode/{mobilePhoneNumber}"
+        endpoint = "/api/v1/sms/{mobilePhoneNumber}"
         return this
     }
 
