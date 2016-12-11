@@ -35,6 +35,8 @@ dependencies {
     compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
     compile 'com.github.JakeWharton:kotterknife:fe90797a31'
     compile 'com.squareup.okhttp3:okhttp:3.5.0'
+    compile 'com.facebook.stetho:stetho:1.4.1'
+    compile 'com.facebook.stetho:stetho-okhttp3:1.4.1'
     compile 'com.damnhandy:handy-uri-templates:2.1.6'
     //Basic
     compile 'com.google.code.gson:gson:2.7'

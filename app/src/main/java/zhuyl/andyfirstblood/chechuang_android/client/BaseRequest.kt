@@ -15,8 +15,8 @@ abstract class BaseRequest {
     var formFiles: MutableList<Pair<String, Pair<String, RequestBody>>> = LinkedList()
     var localization: MutableMap<String, String> = HashMap()
 
-    protected fun buildRequestBuilder(baseUrl: String): Request.Builder {
-        val url = buildRequestUrl(baseUrl)
+    protected fun buildRequestBuilder(): Request.Builder {
+        val url = buildRequestUrl("http://chechuang.leanapp.cn")
         val urlBuilder = HttpUrl.parse(url).newBuilder()
         for ((key, value) in filters) {
             urlBuilder.addQueryParameter(key, value)

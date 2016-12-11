@@ -14,7 +14,10 @@ import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
 import kotterknife.bindOptionalView
 import rx.Observable
+import zhuyl.andyfirstblood.chechuang_android.CheChuangApplication
 import zhuyl.andyfirstblood.chechuang_android.R
+import zhuyl.andyfirstblood.chechuang_android.client.CheChuangClient
+import zhuyl.andyfirstblood.chechuang_android.client.GenericRequest
 import zhuyl.andyfirstblood.chechuang_android.root.ViewUtils
 
 abstract class BaseActivity : AppCompatActivity() {
@@ -24,10 +27,13 @@ abstract class BaseActivity : AppCompatActivity() {
     val toolbar: Toolbar? by bindOptionalView(R.id.toolbar)
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         initSystemViews()
+        super.onCreate(savedInstanceState)
         initContentView()
         initToolbar()
+        initData(savedInstanceState)
+
+        application()
     }
 
     fun confirmAndExit() {
@@ -118,6 +124,18 @@ abstract class BaseActivity : AppCompatActivity() {
 
             showCurrentDialog(builder)
         }
+    }
+
+    fun application(): CheChuangApplication {
+        return this.application as CheChuangApplication
+    }
+
+    fun client(): CheChuangClient {
+        return application().cheChuangClient
+    }
+
+    fun <T> invokeRequestBackground(request: GenericRequest<T>): Observable<T> {
+        return client().rxInvoke(request)
     }
 }
 
