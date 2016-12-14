@@ -9,7 +9,11 @@ class CheChuangClient(val client: OkHttpClient, val baseUrl: String, val userAge
     @Throws(IOException::class, ClientRequestException::class)
     fun <T> invoke(request: GenericRequest<T>): T {
         var client = this.client
+//        if (request is AuthorizedRequest) {
+//            client = client.newBuilder().addInterceptor(RefreshTokenInterceptor(tokenHolder)).build()
+//        }
 
+        request.headerString("User-Agent", userAgent)
         val httpRequest = request.buildRequest(baseUrl)
         val call = client.newCall(httpRequest)
         val response = call.execute()

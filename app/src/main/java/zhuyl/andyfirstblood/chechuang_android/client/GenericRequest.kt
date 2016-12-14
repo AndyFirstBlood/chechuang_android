@@ -3,7 +3,6 @@ package zhuyl.andyfirstblood.chechuang_android.client
 import okhttp3.Response
 import java.io.IOException
 import java.lang.reflect.Type
-import java.util.*
 
 abstract class GenericRequest<out T> : BaseRequest() {
     var type: Type
@@ -41,17 +40,4 @@ abstract class GenericRequest<out T> : BaseRequest() {
         }
     }
 }
-
-class ClientRequestException : CheChuangException {
-    lateinit var headers: HashMap<String, String>
-
-    constructor(detailMessage: String) : super(detailMessage) {
-    }
-
-    constructor(detailMessage: String, headers: HashMap<String, String>) : super(detailMessage) {
-        this.headers = headers
-    }
-}
-
-open class CheChuangException(detailMessage: String) : Exception(detailMessage)
 

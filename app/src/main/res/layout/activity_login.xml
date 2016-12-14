@@ -8,6 +8,10 @@
     tools:context="zhuyl.andyfirstblood.chechuang_android.ui.user.LoginActivity"
     android:orientation="vertical">
 
-
+  <ImageView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:id="@+id/aaa"
+      />
 
 </LinearLayout>

@@ -32,8 +32,6 @@ abstract class BaseActivity : AppCompatActivity() {
         initContentView()
         initToolbar()
         initData(savedInstanceState)
-
-        application()
     }
 
     fun confirmAndExit() {
