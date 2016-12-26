@@ -11,16 +11,73 @@
       android:id="@+id/linearTop"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:layout_above="@+id/linearCenter"
       android:layout_alignParentTop="true"
-      android:layout_marginTop="30dp"
+      android:layout_alignTop="@+id/linearCenter"
       android:orientation="vertical">
 
     <ImageView
         android:id="@+id/session_logo"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:src="@drawable/ic_add" />
+        android:layout_gravity="center" />
   </LinearLayout>
 
+  <LinearLayout
+      android:id="@+id/linearCenter"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentLeft="true"
+      android:layout_alignParentStart="true"
+      android:layout_centerVertical="true"
+      android:baselineAligned="true"
+      android:focusable="true"
+      android:focusableInTouchMode="true"
+      android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/session_edittext_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="请输入手机号"
+            android:inputType="none|text" />
+      <Button
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="获取验证码"
+          android:id="@+id/session_request_button"
+          android:layout_gravity="end" />
+
+    </FrameLayout>
+
+
+    <EditText
+        android:id="@+id/session_edittext_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:hint="请输入验证码"
+        android:inputType="numberPassword" />
+  </LinearLayout>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/linearCenter"
+      android:layout_marginTop="20dp"
+      android:orientation="vertical">
+
+    <Button
+        android:id="@+id/session_button_login"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/session_login_shape"
+        android:text="无密码快捷登录"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
+  </LinearLayout>
 </RelativeLayout>

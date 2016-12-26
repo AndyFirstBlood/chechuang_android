@@ -4,12 +4,12 @@ import okhttp3.Request
 
 class SendSmsRequest : GenericRequest<String>() {
     fun prepare(): SendSmsRequest {
-        endpoint = "sms/{mobilePhoneNumber}"
+        endpoint = "/v1/sms/{mobilePhoneNumber}"
         return this
     }
 
-    fun interpolation(): SendSmsRequest {
-        interpolations.put("mobilePhoneNumber", 18616367889)
+    fun interpolation(mobilePhoneNumber: String): SendSmsRequest {
+        interpolations.put("mobilePhoneNumber", mobilePhoneNumber)
         return this
     }
 

@@ -27,7 +27,6 @@ abstract class BaseRequest {
                 builder.addHeader(key, value)
             }
         }
-        println("builder = ${builder.head()}")
         return builder
     }
 
@@ -117,7 +116,6 @@ abstract class BaseRequest {
     }
 
     protected fun buildRequestBody(): RequestBody {
-        println("333333")
         if (formFiles.isEmpty()) {
             return buildFormBody()
         } else {

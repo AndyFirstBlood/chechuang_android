@@ -28,7 +28,7 @@ class CheChuangApplication : MultiDexApplication(), Application.ActivityLifecycl
 
     fun initCheChuangClient() {
         val client = buildOkHttpClient()
-        val baseUrl = "http://chechuang.leanapp.cn/api/v1/"
+        val baseUrl = "http://chechuang.leanapp.cn"
 
         val userAgent = "CheChuang/" + packageInfo.versionName + "-" + packageInfo.versionCode + "(Android; U; " + CPU_ABI + "-" + RELEASE + "; " +
                 Locale.getDefault().language + "-" + Locale.getDefault().country + ")"

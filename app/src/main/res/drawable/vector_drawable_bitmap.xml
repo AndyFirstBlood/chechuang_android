@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:viewportWidth="258" android:viewportHeight="204" android:width="258dp"
+    android:height="204dp">
+    <group android:name="play/ic_launcher_APP" android:translateY="-154" android:translateX="-127" />
+</vector>
