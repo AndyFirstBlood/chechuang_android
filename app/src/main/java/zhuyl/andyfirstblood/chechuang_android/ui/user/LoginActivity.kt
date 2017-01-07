@@ -5,7 +5,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast.LENGTH_SHORT
 import android.widget.Toast.makeText
+import com.jakewharton.rxbinding.view.RxView
 import kotterknife.bindView
+import rx.Observable
 import rx.android.schedulers.AndroidSchedulers.mainThread
 import zhuyl.andyfirstblood.chechuang_android.R
 import zhuyl.andyfirstblood.chechuang_android.client.LoginRequest
@@ -13,6 +15,7 @@ import zhuyl.andyfirstblood.chechuang_android.client.SendSmsRequest
 import zhuyl.andyfirstblood.chechuang_android.root.BindContentView
 import zhuyl.andyfirstblood.chechuang_android.ui.BaseActivity
 import zhuyl.andyfirstblood.chechuang_android.ui.weight.SmsRequestDialog
+import java.util.concurrent.TimeUnit
 import java.util.regex.Pattern
 
 @BindContentView(R.layout.activity_login)
@@ -47,9 +50,32 @@ class LoginActivity : BaseActivity() {
         val smsRequestDialog = SmsRequestDialog(this)
         smsRequestDialog.show()
         smsRequestDialog.setCancelable(true)
-        smsRequestDialog.confirmButton.setOnClickListener {
-            confirmAndAsk(phoneNumber, smsRequestDialog)
+        val confirmButton = smsRequestDialog.confirmButton
+        RxView.clicks(confirmButton).subscribe {
+            invokeSendAction(phoneNumber, smsRequestDialog)
         }
+
+    }
+
+    private fun invokeSendAction(phoneNumber: String, smsRequestDialog: SmsRequestDialog) {
+        disableSendSmsTokenButton()
+        confirmAndAsk(phoneNumber, smsRequestDialog)
+    }
+
+    private fun disableSendSmsTokenButton() {
+        smsRequestButton.isEnabled = false
+        smsRequestButton.text = "发送中..."
+    }
+
+    private fun waitForOneMinute() {
+        Observable.interval(1, TimeUnit.SECONDS).takeUntil { second -> second > 60 }.observeOn(mainThread()).doOnCompleted({
+            this.enableSendSmsTokenButton()
+        }).subscribe({ second -> smsRequestButton.text = "重新发送(" + (60 - second!!) + ")" }, {})
+    }
+
+    private fun enableSendSmsTokenButton() {
+        smsRequestButton.isEnabled = true
+        smsRequestButton.text = "获取验证码"
     }
 
     fun checkPhoneNumber(phoneNumber: String): Boolean {
@@ -67,7 +93,6 @@ class LoginActivity : BaseActivity() {
             return
         }
         smsRequestDialog.dismiss()
-        progressDialog("正在请求中")
         smsRequestRequirements(phoneNumber)
     }
 
@@ -89,8 +114,10 @@ class LoginActivity : BaseActivity() {
         }).observeOn(mainThread()).subscribe({
             hideCurrentDialog()
             makeText(this, "已发送", LENGTH_SHORT).show()
+            waitForOneMinute()
         }, {
             alertDialog(it.message!!)
+            enableSendSmsTokenButton()
         })
     }
 
