@@ -99,6 +99,11 @@ class LoginActivity : BaseActivity() {
     private fun login() {
         val phone = userPhoneEditText.text.toString()
         val smsCode = smsCodeEditText.text.toString()
+        if (phone.isEmpty() || smsCode.isEmpty() || !checkPhoneNumber(phone)) {
+            alertDialog("请填写正确的手机号和验证码")
+            return
+        }
+
         invokeRequestBackground(LoginRequest().apply {
             prepare().formMobilePhoneNumber(phone).formSmsCode(smsCode)
         }).observeOn(mainThread()).subscribe({
