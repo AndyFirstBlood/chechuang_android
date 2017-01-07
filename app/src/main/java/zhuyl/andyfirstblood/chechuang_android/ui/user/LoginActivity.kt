@@ -13,6 +13,7 @@ import zhuyl.andyfirstblood.chechuang_android.client.SendSmsRequest
 import zhuyl.andyfirstblood.chechuang_android.root.BindContentView
 import zhuyl.andyfirstblood.chechuang_android.ui.BaseActivity
 import zhuyl.andyfirstblood.chechuang_android.ui.weight.SmsRequestDialog
+import java.util.regex.Pattern
 
 @BindContentView(R.layout.activity_login)
 class LoginActivity : BaseActivity() {
@@ -37,12 +38,24 @@ class LoginActivity : BaseActivity() {
             alertDialog("请输入您的手机号")
             return
         }
+
+        if (!checkPhoneNumber(phoneNumber)) {
+            alertDialog("请输入正确格式的手机号码")
+            return
+        }
+
         val smsRequestDialog = SmsRequestDialog(this)
         smsRequestDialog.show()
         smsRequestDialog.setCancelable(true)
         smsRequestDialog.confirmButton.setOnClickListener {
             confirmAndAsk(phoneNumber, smsRequestDialog)
         }
+    }
+
+    fun checkPhoneNumber(phoneNumber: String): Boolean {
+        val pattern = Pattern.compile("^1[0-9]{10}$")
+        val matcher = pattern.matcher(phoneNumber)
+        return matcher.matches()
     }
 
     private fun confirmAndAsk(phoneNumber: String, smsRequestDialog: SmsRequestDialog) {
