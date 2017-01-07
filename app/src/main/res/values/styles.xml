@@ -11,4 +11,16 @@
     <style name="CC.ToolbarWhiteTheme" parent="Widget.Design.CollapsingToolbar">
         <item name="android:textColorSecondary">@color/white</item>
     </style>
+
+    <style name="CheChuang.SplashTheme" parent="@style/CheChuang.SessionTheme">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="CheChuang.SessionTheme" parent="@style/AppTheme">
+        <item name="android:windowSoftInputMode">adjustResize</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:orientation">vertical</item>
+    </style>
 </resources>

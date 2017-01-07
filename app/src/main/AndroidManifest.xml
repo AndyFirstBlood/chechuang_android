@@ -26,6 +26,11 @@
         <activity
             android:name=".ui.user.LoginActivity"
             android:launchMode="singleTop">
+        </activity>
+        <activity
+            android:theme="@style/CheChuang.SplashTheme"
+            android:name=".ui.LauncherActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
